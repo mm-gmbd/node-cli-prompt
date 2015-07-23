@@ -26,7 +26,7 @@ function prompt (message, hideInput, cb) {
       if (key.ctrl && key.name === 'c') {
         process.exit();
       }
-      else if (key.name === 'return' || key.name === 'enter') {
+      else if (key.name === 'enter') {
         process.stdin.removeListener('keypress', listen);
         process.stdin.pause();
         if (hideInput) {
@@ -98,6 +98,7 @@ function multi (questions, cb) {
     else if (q.type === 'boolean') {
       label += '(y/n) ';
       q.validate = function (val) {
+        val = val.trim();
         if (!val.match(/^(yes|ok|true|y|no|false|n)$/i)) return false;
       };
     }
