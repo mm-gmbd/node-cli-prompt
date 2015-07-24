@@ -26,7 +26,16 @@ function prompt (message, hideInput, cb) {
       if (key.ctrl && key.name === 'c') {
         process.exit();
       }
-      else if (key.name === 'return') {
+      else if (key.name === 'return'){
+        if (hideInput == true){
+          process.stdin.removeListener('keypress', listen);
+          process.stdin.pause();
+          setRawMode(false);
+          console.log();
+          cb(line, function () {}); // for backwards-compatibility, fake end() callback
+        }
+        return;
+      } else if (key.name === 'enter') {
         process.stdin.removeListener('keypress', listen);
         process.stdin.pause();
         if (hideInput) {
